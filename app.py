@@ -52,7 +52,7 @@ STYLE_CONFIG = {
     "line_spacing_title_details": 6,
     "line_spacing_details": 4,
     "request_timeout": 20,
-    "anime_goal_total": 50 
+    "anime_goal_total": 250
 }
 
 try:
