@@ -2,14 +2,14 @@ name: Generate Anilist Profile Images
 
 on:
   schedule:
-    - cron: '15 */3 * * *' 
+    - cron: '15 */3 * * *'
   workflow_dispatch:
 
 jobs:
-  generate-images: 
+  generate-images:
     runs-on: ubuntu-latest
     permissions:
-      contents: write 
+      contents: write
 
     steps:
       - name: Checkout Repository
@@ -18,13 +18,12 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.9' 
+          python-version: '3.10'
+
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-          # Uncomment the line below if you have font rendering issues on the GitHub runner
-          # sudo apt-get update && sudo apt-get install -y libfreetype6-dev libjpeg-dev libopenjp2-7-dev libtiff5-dev zlib1g-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python3-tk libharfbuzz-dev libfribidi-dev libxcb1-dev
 
       - name: Generate Images
         env:
@@ -36,9 +35,7 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action Bot"
-          # Add all generated images and potentially font files if they aren't tracked
           git add last_anime.png last_manga.png *.ttf
-          # Commit only if there are changes to the PNG files
           if ! git diff --staged --quiet --exit-code -- last_anime.png last_manga.png; then
             git commit -m "Update Anilist profile images"
             git push
